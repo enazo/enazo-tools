@@ -1,0 +1,53 @@
+body{
+    margin: 0;
+    padding: 20px;
+}
+
+textarea{
+    display: block;
+    width: 800px;
+    min-height: 140px;
+    width: 100%;
+    min-width: 100%;
+    max-width: 800%;
+    box-sizing: border-box;
+    margin: 3px 0;
+    border: 1px solid #999;
+    border-radius: 2px;
+    font:inherit;
+    padding: 6px 8px;
+    &:focus{
+        outline: none;
+        border-color: #4d90fe;
+    }
+
+    &[size="middle"]{
+        min-height: 300px;
+    }
+}
+
+button{
+    display: inline-block;
+    padding: 6px 8px;
+    margin: 3px 0;
+    border: 0;
+    border-radius: 2px;
+    font:inherit;
+    cursor: pointer;
+    background: #06A;
+    color: #fff;
+
+    &:active{
+        background-color: #159;
+    }
+
+    &[disabled]{
+        opacity: 0.5;
+        cursor:wait;
+    }
+}
+
+.tip{
+    display: inline-block;
+    padding: 0 8px;
+}
