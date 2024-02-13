@@ -44,6 +44,7 @@ const btn2El = $('#button2');
 const tip2El = $('.tip2');
 
 const option2El = $('.onlyOneStage');
+const option3El = $('.isGetAllCharacters');
 btn2El.onclick = ()=>{
     btn2El.disabled = true;
     const ids = output1El.value.match(/\d+/g).map(a=>+a);
@@ -53,13 +54,14 @@ btn2El.onclick = ()=>{
     let errorNum = 0;
 
     const onlyOneStage = option2El.checked;
+    const isGetAllCharacters = option3El.checked;
     
     let filtedNum = 0;
 
     tip2El.innerText = `当前进度：0 / ${ids.length}，已获取 0 个链接`;
 
     forEach(ids, (id, index, next) => {
-        getSubjectInfoById(id, info => {
+        getSubjectInfoById(id, isGetAllCharacters, info => {
 
             if(onlyOneStage && !isOneStage(info)){ // 只获取单季
                 filtedNum++;

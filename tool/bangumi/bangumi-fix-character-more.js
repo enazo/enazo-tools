@@ -140,6 +140,7 @@ const getCharacterNameTags = (character)=>{
 
     let tags = [character.cn,character.name,...character.names];
 
+    tags = [...new Set(tags)];
     tags = tags.filter(a=>a);
 
     tags.forEach(name=>{

@@ -43,12 +43,14 @@ const InfoKeysConvert = {
 };
 
 
-const getSubjectInfoById = (id,onOver) => {
+const getSubjectInfoById = (id,isGetAllCharacters = false,onOver) => {
     const url = `https://bangumi.tv/subject/${id}`;
     getBangumiHTML(url, html => {
 
         const info = fixSubject(id,html);
 
+        if(!isGetAllCharacters) return onOver(info);
+        
         getAllCharacterIdsBySubjectInfo(info,characterIds=>{
             // console.log('characterIds',characterIds);
 

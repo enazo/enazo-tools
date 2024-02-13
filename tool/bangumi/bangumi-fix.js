@@ -23,14 +23,14 @@ const fixCharacters = (id,html)=>{
 		cover = cover.replace(/\?r=.+?$/,'');
 		cover = cover.replace(/^\/\//,'http://');
 
-		let names = getMatch(li,/title="(.+?) \/ (.+?)"/,1)
-		if(!names){
-			names = getMatch(li,/title="(.+?)/,1)
+		let name = getMatch(li,/title="(.+?) \/ (.+?)"/,1)
+		if(!name){
+			name = getMatch(li,/title="(.+?)/,1)
 		}
 		const cn = getMatch(li,/title="(.+?) \/ (.+?)"/,2) || undefined
 		return {
 			id,
-			names,
+			names:[name],
 			cn,
 			cv,
 			fade,
@@ -172,8 +172,14 @@ const isOneStage = (subject)=>{
 const subjectToLibTagText = subject=>{
     const namesText = subject.names.join('、');
     const charactersNamesText = subject.characters.map(character=>{
-        return character.nameTags;
+        return character.nameTags || [...new Set([...character.names,character.cn])].join('、');
     }).join('、').replace(/\(.+?\)/g,'');
     const kitsuText = getAnimeTips(subject);
-    return `${namesText}^${charactersNamesText}$${kitsuText}`;
+
+	let outputText = namesText;
+
+	if(charactersNamesText) outputText += `^${charactersNamesText}`;
+	if(kitsuText) outputText += `$${kitsuText}`;
+
+	return outputText;
 }
