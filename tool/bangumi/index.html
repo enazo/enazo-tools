@@ -23,7 +23,7 @@
     </article>
     <article>
         <h2>从列表页获取番剧地址列表</h2>
-        <textarea id="input_bangumi_1" placeholder="输入番剧列表链接"></textarea>
+        <textarea id="input_bangumi_1" placeholder="输入番剧列表链接">https://bangumi.tv/anime/browser/airtime/2023?sort=rank</textarea>
         <div>
             <button id="button1">根据番剧列表链接抓取番剧链接列表</button>
             <span class="tip tip1"></span>
@@ -31,12 +31,23 @@
         <textarea id="output_bangumi_1" placeholder="输出的番剧链接列表" size="middle"></textarea>
         <div>
             <button id="button2">根据番剧链接列表生成词条信息</button>
+            <label>
+                <input type="checkbox" class="onlyOneStage" checked>仅保留首期动画
+            </label>
             <span class="tip tip2"></span>
         </div>
-        <textarea id="output_bangumi_2" placeholder="输出番剧词条列表" size="middle"></textarea>
+        <textarea id="output_bangumi_2" placeholder="输出番剧词条列表" size="middle" style="font-size: 12px;"></textarea>
     </article>
 
+    <script src="../js/indexDB.js"></script>
+    <script src="../js/base-functions.js"></script>
+    <script src="../js/i2v.js"></script>
+    <script src="../js/tag-en2cn.js"></script>
+    <script src="../js/tc2sc.js"></script>
     <script src="bangumi-functions.js"></script>
+    <script src="anime-tips-func.js"></script>
+    <script src="bangumi-fix.js"></script>
+    <script src="bangumi-fix-character-more.js"></script>
     <script src="bangumi-document-01.js"></script>
 </body>
 </html>

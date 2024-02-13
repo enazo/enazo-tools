@@ -1,1 +1,3 @@
-tool/bangumi/ui.css
+tool/bangumi/*.css
+tool/bangumi/text/*
+models/*
