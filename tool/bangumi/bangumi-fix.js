@@ -159,7 +159,7 @@ const isOneStage = (subject)=>{
 	const text = subject.names.join('、');
 	
 	if(/1期|1季|一期|一季/.test(text)) return true;
-	if(/第.+期/.test(text)) return false;
+	if(/第.+[期篇话]/.test(text)) return false;
 	if(/(2|3|4|六)$/.test(text)) return false;
 	if(/第.+季|再始动|\dnd|\d期|\d季/.test(text)) return false;
 
@@ -168,18 +168,43 @@ const isOneStage = (subject)=>{
 
 
 
+const fixText = text=>{
+	text = String(text);
+	text = trim(text);
+	text = text.replace(/\(.+?\)/g,'').replace(/（.+?）/g,'');
+
+	text = 去除网页标记(text);
+
+	text = text.split(/[、/,，]/);
+	text = text.map(a=>trim(a));
+	text = text.filter(a=>a);
+	text = [...new Set(text)];
+	text = text.join('、');
+
+	return text;
+
+}
+
 
 const subjectToLibTagText = subject=>{
-    const namesText = subject.names.join('、');
-    const charactersNamesText = subject.characters.map(character=>{
-        return character.nameTags || [...new Set([...character.names,character.cn])].join('、');
-    }).join('、').replace(/\(.+?\)/g,'');
-    const kitsuText = getAnimeTips(subject);
+    const namesText = fixText(subject.names.join('、'));
+	let characterTags = [];
+	subject.characters.forEach(character=>{
+		if(character.nameTags){
+			return characterTags.push(character.nameTags);
+		}
+		characterTags = characterTags.concat([...character.names,character.cn]);
+    });
+    const charactersNamesText = fixText([...new Set(characterTags)].filter(a=>a).join('、'));
+    const kitsuText = fixText(getAnimeTips(subject).join('、'));
 
 	let outputText = namesText;
 
 	if(charactersNamesText) outputText += `^${charactersNamesText}`;
 	if(kitsuText) outputText += `$${kitsuText}`;
+
+
+	outputText = outputText.replace(/\(.+?\)/g,'').replace(/（.+?）/g,'');
 
 	return outputText;
 }
