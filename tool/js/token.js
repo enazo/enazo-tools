@@ -1,0 +1,1 @@
+const getToken = ()=> localStorage.getItem('u1r0n') || '';
