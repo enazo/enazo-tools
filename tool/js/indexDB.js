@@ -256,12 +256,13 @@ function fw4wdb(database,version,columns){
 					console.log('delete success');
 				};
 			},
-			'clear':function(){
+			'clear':function(callback){
 				var 
 				request = this.db.transaction(this.name,'readwrite').objectStore(this.name);
 				request.clear();
 				request.onsuccess = function(event){
 					console.log('clear success');
+					callback(event);
 				};
 			}
 		};
