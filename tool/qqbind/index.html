@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-Hans-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QQ绑定 - 你画我猜 - 神奇海螺</title>
+</head>
+<body>
+    <h1>绑定QQ</h1>
+    
+    <div id="bindLoading" style="display:none">
+        <input type="text" id="input-qq">
+        <button id="bind">绑定</button>
+    </div>
+    
+
+    <script src="../js/pink-api.js"></script>
+    <script src="../js/token.js"></script>
+    <script>
+        let token = getToken()
+        let uid = '';
+
+        document.getElementById('bind').onclick = () => {
+            let inputQQ = document.getElementById('input-qq').value
+            if (inputQQ.length < 5) {
+                alert("请输入合法的QQ号！")
+                return
+            }
+            pPost('https://io2.vitechliu.com/api/enazo/bindQQ', {
+                token: uid,
+                nickname: localStorage.getItem('nickname') || '绘谜用户',
+                qq: inputQQ
+            }).then(res => {
+                let message = res.message
+                if (message) alert(message)
+            })
+        }
+        window.onload = () => {
+            if (!token) return
+            fetch('https://enazo.cn/api/social/session?token=' + getToken())
+                .then(res => res.json())
+                .then(res => {
+                    uid = res.uid ?? null
+                    if (uid) {
+                        pGet('https://io2.vitechliu.com/api/enazo/getQQByToken?token=' + uid)
+                            .then(res => {
+                                document.getElementById('bindLoading').style.display = '';
+                                let qq = res.data
+                                if (qq) document.getElementById('input-qq').value = qq
+                            })
+                    }
+                })
+        }
+    </script>
+</body>
+</html>
