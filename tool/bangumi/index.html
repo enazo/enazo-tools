@@ -16,7 +16,10 @@
             进行用户脚本的安装，安装成功后刷新本页面。
         </p>
         <script>
+            console.log('tools', window['enazoToolsEnhanceFunctions'])
             if(window['enazoToolsEnhanceFunctions']){
+                console.log(2)
+
                 document.querySelector('article').style.display = 'none';
             }
         </script>
