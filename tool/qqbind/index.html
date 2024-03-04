@@ -3,13 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QQ绑定 - 你画我猜 - 神奇海螺</title>
+    <title>群粉红妹 绘谜账号绑定 QQ - 绘谜画猜</title>
+    <style>
+        input,button{
+            font:inherit;
+        }
+    </style>
 </head>
 <body>
-    <h1>绑定QQ</h1>
+    <h1>群粉红妹 绘谜账号绑定 QQ</h1>
+    <p>
+        粉红妹是 绘谜画猜群 602606155 中的智能对话机器人，<br> 
+        绑定绘谜账号对应 QQ 可开启更多功能
+    </p>
+    <p>
+        当前绘谜账号 token <b class="enazo-token"></b>
+    </p>
     
     <div id="bindLoading" style="display:none">
-        <input type="text" id="input-qq">
+        <input type="text" id="input-qq" placeholder="123456789">
         <button id="bind">绑定</button>
     </div>
     
@@ -17,9 +29,13 @@
     <script src="../js/pink-api.js"></script>
     <script src="../js/token.js"></script>
     <script>
-        let token = getToken()
+        let token = getToken();
         let uid = '';
-
+        if(!token){
+            alert('请先登录绘谜账号');
+            location.href = 'https://enazo.cn/';
+        }
+        document.querySelector('.enazo-token').innerText = token;
         document.getElementById('bind').onclick = () => {
             let inputQQ = document.getElementById('input-qq').value
             if (inputQQ.length < 5) {
