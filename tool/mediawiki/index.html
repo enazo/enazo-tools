@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-Hans-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mediawiki 爬取测试</title>
+    <style>
+        h3, ul, li {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>MediaWiki 爬取测试</h1>
+
+    
+    <input type="text" placeholder="关键词" id="wiki-input">
+    <input type="number" placeholder="" id="wiki-count" value="10">
+
+    <button id="start">开始</button>
+    <div id="results"></div>
+    
+    
+    <script src="../js/token.js"></script>
+    <script type="module">
+        import MoegirlAdapter from './adapters/MoegirlAdapter.js'
+        import HuijiAdapter from './adapters/HuijiAdapter.js'
+        import BWikiAdapter from './adapters/BWikiAdapter.js'
+
+        const hasTools = Boolean(window['enazoToolsEnhanceFunctions'])
+    
+        const adapters = [MoegirlAdapter, HuijiAdapter, BWikiAdapter]
+        // const adapters = [MoegirlAdapter]
+
+        window.va = MoegirlAdapter
+        document.getElementById('start').onclick = e => {
+            if (!hasTools) {
+                alert("没有安装EnazoTools")
+                return
+            }
+            let input = document.getElementById('wiki-input').value
+            if (!input) {
+                alert("请输入关键词!")
+                return
+            }
+            let resultDiv = document.getElementById('results')
+            resultDiv.innerHTML = '';
+            for (let adapterClass of adapters) {
+                let adapter = new adapterClass
+                adapter.searchOnce(input, data => {
+                    console.log(data)
+                    let titles = data.map(v => v.title)
+                    resultDiv.innerHTML += adapter.generateSearchResult(titles)
+                })
+            }
+            
+            
+        }
+
+
+    </script>
+</body>
+</html>
