@@ -53,7 +53,7 @@
         }
         window.onload = () => {
             if (!token) return
-            fetch('https://enazo.cn/api/social/session?token=' + getToken())
+            fetch('https://draw.enazo.cn/api/draw/session?token=' + getToken())
                 .then(res => res.json())
                 .then(res => {
                     uid = res.uid ?? null
